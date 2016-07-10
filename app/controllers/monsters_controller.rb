@@ -1,4 +1,4 @@
-class MonsterController < ApplicationController
+class MonstersController < ApplicationController
   def index
     render json: Monster.order('created_at desc').all.to_json
   end
