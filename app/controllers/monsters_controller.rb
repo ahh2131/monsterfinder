@@ -7,11 +7,11 @@ class MonstersController < ApplicationController
 
   def create
     # check if name is a real pokemon
-    Monster.create(params[:monster])
+    Monster.create(monster_params)
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
   private
   def monster_params
-    params.require(:monster).permit(:name, :lat, :lng)
+    params.require(:monster).permit(:monster, :name, :lat, :lng)
   end
 end
