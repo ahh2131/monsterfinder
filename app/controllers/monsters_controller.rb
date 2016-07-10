@@ -11,7 +11,7 @@ class MonstersController < ApplicationController
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
   private
-  def monaster_params
+  def monster_params
     params.require(:monster).permit(:name, :lat, :lng)
   end
 end
