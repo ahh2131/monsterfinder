@@ -155,4 +155,13 @@ class Monster < ActiveRecord::Base
   validates_inclusion_of :name, :in => MONSTERS, :allow_nil => false
 
 
+  before_save do
+    monster_index = MONSTERS.index(name)
+    self.number = if monster_index >= 31
+                    monster_index + 2
+                  else
+                    monster_index + 1
+                  end
+  end
+
 end
