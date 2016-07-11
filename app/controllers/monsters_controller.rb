@@ -10,6 +10,15 @@ class MonstersController < ApplicationController
     Monster.create(monster_params)
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
+
+  def search
+    if Monster::MONSTERS.include?(params[:monster].titleize)
+      render json: Monster.where(name: params[:monster].titleize).all.to_json
+    else
+      render json: []
+    end
+  end
+
   private
   def monster_params
     params.require(:monster).permit(:monster, :name, :lat, :lng)
