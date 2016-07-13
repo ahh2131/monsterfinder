@@ -6,6 +6,8 @@ class MonstersController < ApplicationController
   def index
     render json: Monster.where.not(lat: nil).order('created_at desc')
       .where(created_at: 3.hours.ago..Time.now).all.to_json
+    expires_in 5.minutes, :public => true
+
   end
 
   def create
