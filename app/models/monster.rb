@@ -153,6 +153,7 @@ class Monster < ActiveRecord::Base
   )
   validates :name, :lat, :lng, presence: true
   validates_inclusion_of :name, :in => MONSTERS, :allow_nil => false
+  geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
 
   before_save do

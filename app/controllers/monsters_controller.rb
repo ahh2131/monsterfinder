@@ -7,6 +7,7 @@ class MonstersController < ApplicationController
     #render json: Monster.where.not(lat: nil).order('created_at desc')
     #  .where(created_at: 3.hours.ago..Time.now).all.to_json
     #expires_in 5.minutes, :public => true
+    m = Monster.near([params[:lng], params[:lat]], 200)
     render json: File.read("#{Rails.root}/public/monsters.json")
 
 
