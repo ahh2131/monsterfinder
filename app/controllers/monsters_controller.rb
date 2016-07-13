@@ -2,10 +2,10 @@ class MonstersController < ApplicationController
 
 
   skip_before_filter :verify_authenticity_token
-  
+
   def index
-    render json: Monster.where.not(lat: nil).order('created_at desc').all.to_json
-      #.where(created_at: 2.hours.ago..Time.now).all.to_json
+    render json: Monster.where.not(lat: nil).order('created_at desc')
+      .where(created_at: 3.hours.ago..Time.now).all.to_json
   end
 
   def create
