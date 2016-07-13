@@ -4,9 +4,11 @@ class MonstersController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    render json: Monster.where.not(lat: nil).order('created_at desc')
-      .where(created_at: 3.hours.ago..Time.now).all.to_json
-    expires_in 5.minutes, :public => true
+    #render json: Monster.where.not(lat: nil).order('created_at desc')
+    #  .where(created_at: 3.hours.ago..Time.now).all.to_json
+    #expires_in 5.minutes, :public => true
+    render json: File.read("#{Rails.root}/public/monsters.json")
+
 
   end
 
