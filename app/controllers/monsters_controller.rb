@@ -16,7 +16,6 @@ class MonstersController < ApplicationController
 
   def create
     # check if name is a real pokemon
-    monster_params[:name] = monster_params[:name].titleize
     Monster.create(monster_params)
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
