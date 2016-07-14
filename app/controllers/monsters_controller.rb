@@ -15,7 +15,7 @@ class MonstersController < ApplicationController
     #  .where(created_at: 3.hours.ago..Time.now).all.to_json
     #expires_in 5.minutes, :public => true
     m = if params[:recent] == 'true'
-          Monster.near(coordinates, DISTANCE).where(created_at: 1.hours.ago..Time.now).all.to_json
+          Monster.recent.near(coordinates, DISTANCE).all.to_json
         else
           Monster.near(coordinates, DISTANCE).all.to_json
         end
@@ -31,7 +31,12 @@ class MonstersController < ApplicationController
   def search
     monster = params[:monster].titleize
     if Monster::MONSTERS.include?(monster)
-      render json: Monster.near(coordinates, DISTANCE).where(name: monster).all.to_json
+      m = if params[:recent] == 'true'
+            Monster.recent.near(coordinates, DISTANCE).where(name: monster).all
+          else
+            Monster.near(coordinates, DISTANCE).where(name: monster).all
+          end
+      render json: m.to_json
     else
       render json: []
     end

@@ -163,6 +163,7 @@ class Monster < ActiveRecord::Base
   validates_inclusion_of :name, :in => MONSTERS - MISSING, :allow_nil => false
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
+  scope :recent, -> { where(created_at: 1.hours.ago..Time.now)}
 
   before_save do
     monster_index = MONSTERS.index(name)
