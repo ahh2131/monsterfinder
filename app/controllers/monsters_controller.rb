@@ -6,7 +6,7 @@ class MonstersController < ApplicationController
 
 
 
-  DISTANCE = 20
+  DISTANCE = 10
 
   skip_before_filter :verify_authenticity_token
 
