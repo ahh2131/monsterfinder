@@ -164,6 +164,12 @@ class Monster < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
   scope :recent, -> { where(created_at: 1.hours.ago..Time.now)}
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
+
+  def self.default_scope
+    active
+  end
 
   before_save do
     monster_index = MONSTERS.index(name)
