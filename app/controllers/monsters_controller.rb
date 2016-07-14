@@ -25,7 +25,9 @@ class MonstersController < ApplicationController
   def create
     # check if name is a real pokemon
     m = Monster.create(monster_params)
-    Activity.create(uuid: params[:uuid], monster: m, activity_type: "spot")
+    if params.key?(:uuid)
+      Activity.create(uuid: params[:uuid], monster: m, activity_type: "spot")
+    end
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
