@@ -151,8 +151,16 @@ class Monster < ActiveRecord::Base
     Mewtwo
     Mew
   )
+
+  MISSING = %w(
+    Mewtwo
+    Mew
+    Articuno
+    Zapdos
+    Moltres
+  )
   validates :name, :lat, :lng, presence: true
-  validates_inclusion_of :name, :in => MONSTERS, :allow_nil => false
+  validates_inclusion_of :name, :in => MONSTERS - MISSING, :allow_nil => false
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
 

@@ -25,8 +25,9 @@ class MonstersController < ApplicationController
   end
 
   def search
-    if Monster::MONSTERS.include?(params[:monster].titleize)
-      render json: Monster.near(coordinates, DISTANCE).where(name: params[:monster].titleize).all.to_json
+    monster = params[:monster].titleize
+    if Monster::MONSTERS.include?(monster)
+      render json: Monster.near(coordinates, DISTANCE).where(name: monster).all.to_json
     else
       render json: []
     end
