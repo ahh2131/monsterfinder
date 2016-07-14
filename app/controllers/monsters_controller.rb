@@ -7,7 +7,7 @@ class MonstersController < ApplicationController
     #render json: Monster.where.not(lat: nil).order('created_at desc')
     #  .where(created_at: 3.hours.ago..Time.now).all.to_json
     #expires_in 5.minutes, :public => true
-    m = Monster.near([params[:lat], params[:lng]], 20)
+    m = Monster.near(coordinates, 20)
     render json: m
     #render json: File.read("#{Rails.root}/public/monsters.json")
 
@@ -22,10 +22,14 @@ class MonstersController < ApplicationController
 
   def search
     if Monster::MONSTERS.include?(params[:monster].titleize)
-      render json: Monster.where(name: params[:monster].titleize).all.to_json
+      render json: Monster.near(coordinates, 20).where(name: params[:monster].titleize).all.to_json
     else
       render json: []
     end
+  end
+
+  def coordinates
+    [params[:lat], params[:lng]]
   end
 
   private
