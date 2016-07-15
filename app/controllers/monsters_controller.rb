@@ -10,11 +10,14 @@ class MonstersController < ApplicationController
     #render json: Monster.where.not(lat: nil).order('created_at desc')
     #  .where(created_at: 3.hours.ago..Time.now).all.to_json
     #expires_in 5.minutes, :public => true
-    m = if params[:recent] == 'true'
-          Monster.recent.near(coordinates, DISTANCE).all.to_json
-        else
-          Monster.near(coordinates, DISTANCE).all.to_json
-        end
+    m = []
+    if coordinates_exist?
+      m = if params[:recent] == 'true'
+            Monster.recent.near(coordinates, DISTANCE).all.to_json
+          else
+            Monster.near(coordinates, DISTANCE).all.to_json
+          end
+    end
     render json: m
   end
 
@@ -45,7 +48,12 @@ class MonstersController < ApplicationController
     [params[:lat], params[:lng]]
   end
 
+  def coordinates_exist?
+    params[:lat].to_f != 0.0 && params[:lng].to_f != 0.0
+  end
+
   private
+
   def monster_params
     params.require(:monster).permit(:monster, :name, :lat, :lng)
   end
