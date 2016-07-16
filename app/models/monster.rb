@@ -169,6 +169,7 @@ class Monster < ActiveRecord::Base
   scope :recent, -> { where(created_at: 1.hours.ago..Time.now)}
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+  scope :with_associations, -> { includes(:activities, activities: [:users]) }
 
   def self.default_scope
     active

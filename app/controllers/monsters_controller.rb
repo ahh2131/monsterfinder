@@ -13,9 +13,9 @@ class MonstersController < ApplicationController
     m = []
     if coordinates_exist?
       m = if params[:recent] == 'true'
-            Monster.includes(:activities).recent.near(coordinates, DISTANCE).all
+            Monster.with_associations.recent.near(coordinates, DISTANCE).all
           else
-            Monster.includes(:activities).near(coordinates, DISTANCE).all
+            Monster.with_associations.near(coordinates, DISTANCE).all
           end
     end
     render json: MonsterBuilder.new(m).render
@@ -23,9 +23,11 @@ class MonstersController < ApplicationController
 
   def create
     # check if name is a real pokemon
+    # this can be delayed job
     m = Monster.create(monster_params)
     if params.key?(:uuid)
-      Activity.create(uuid: params[:uuid], monster: m, activity_type: "spot")
+      u = User.first_or_create!(uuid: params[:uuid], name: params[:name])
+      Activity.create(user: u, monster: m, activity_type: "spot")
     end
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end

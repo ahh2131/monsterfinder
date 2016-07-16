@@ -11,20 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714125636) do
+ActiveRecord::Schema.define(version: 20160716030015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.text     "uuid",          null: false
     t.integer  "activity_type", null: false
     t.integer  "monster_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "user_id"
   end
 
   add_index "activities", ["monster_id"], name: "index_activities_on_monster_id", using: :btree
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "monsters", force: :cascade do |t|
     t.string   "name"
@@ -36,5 +37,13 @@ ActiveRecord::Schema.define(version: 20160714125636) do
     t.boolean  "active",                              default: true
   end
 
+  create_table "users", force: :cascade do |t|
+    t.text     "uuid"
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "activities", "monsters"
+  add_foreign_key "activities", "users"
 end

@@ -1,6 +1,6 @@
 class Activity < ActiveRecord::Base
   belongs_to :monster
-
+  belongs_to :user
   scope :spot, -> { where(activity_type: 0) }
   scope :upVotes, -> { where(activity_type: 1) }
   scope :downVotes, -> { where(activity_type: 2) }
