@@ -40,7 +40,7 @@ class MonstersController < ApplicationController
           else
             Monster.near(coordinates, DISTANCE).where(name: monster).all
           end
-      render json: MonsterBuilder.new(m).render
+      render json: MonsterBuilder.new(m).render.as_json
     else
       render json: []
     end
