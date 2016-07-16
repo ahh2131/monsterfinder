@@ -9,6 +9,8 @@ class Activity < ActiveRecord::Base
   scope :downVotes, -> { where(activity_type: 2) }
   validates_inclusion_of :activity_type, :in => ["spot", "upvote", "downvote"], :allow_nil => false
 
+  VOTE_MINIMUM = -5
+
   enum activity_type: {
     "spot" => 0,
     "upvote" => 1,
@@ -30,6 +32,9 @@ class Activity < ActiveRecord::Base
 
   def update_total_vote_count
     monster.total_vote_count = monster.upvote_count - monster.downvote_count
+    if monster.total_vote_count < VOTE_MINIMUM
+      monster.active = false
+    end
   end
 
 
