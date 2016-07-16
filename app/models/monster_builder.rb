@@ -16,7 +16,8 @@ class MonsterBuilder
         number: monster.number,
         spotterName: monster.activities.spot.first&.uuid || "",
         upVotes: monster.activities.upVotes.count,
-        downVotes: monster.activities.downVotes.count
+        downVotes: monster.activities.downVotes.count,
+        distance: monster.distance
       }
     end.to_json
   end
