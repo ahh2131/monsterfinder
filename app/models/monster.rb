@@ -166,11 +166,10 @@ class Monster < ActiveRecord::Base
   validates_inclusion_of :name, :in => MONSTERS - MISSING, :allow_nil => false
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
-  scope :recent, -> { where(created_at: 1.hours.ago..Time.now)}
+  scope :recent, -> (condition) { where(created_at: 1.hours.ago..Time.now) if condition}
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :with_associations, -> { includes(:activities, activities: [:user]) }
-
   def self.default_scope
     active
   end

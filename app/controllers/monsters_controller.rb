@@ -12,11 +12,11 @@ class MonstersController < ApplicationController
     #expires_in 5.minutes, :public => true
     m = []
     if coordinates_exist?
-      m = if params[:recent] == 'true'
-            Monster.with_associations.recent.near(coordinates, DISTANCE).all
-          else
-            Monster.with_associations.near(coordinates, DISTANCE).all
-          end
+      m = Monster
+          .with_associations
+          .recent(params[:recent] == 'true')
+          .near(coordinates, DISTANCE)
+          .all
     end
     render json: MonsterBuilder.new(m).render.as_json
   end
