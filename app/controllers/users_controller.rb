@@ -12,13 +12,13 @@ class UsersController < ApplicationController
     a = Activity.where(
       user: u,
       monster: m,
-      activity_type: [1, 2]
+      activity_type: ["upvote", "downvote"]
     ).first
     if a.nil?
       Activity.create(
         user: u,
         monster: m,
-        activity_type: which_vote(params[:vote])
+        activity_type: which_vote
       )
     end
 
