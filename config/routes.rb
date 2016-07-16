@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  root 'monsters#index'
-  resources :monsters
-  resources :users
-  get 'search/:monster' => 'monsters#search'
-  match 'vote', to: 'users#vote', via: [:post]
+  api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}, :default => true) do
+    root 'monsters#index'
+    resources :monsters
+    resources :users
+    get 'search/:monster' => 'monsters#search'
+    match 'vote', to: 'users#vote', via: [:post]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

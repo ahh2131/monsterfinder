@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class V1::UsersController < V1::BaseController
 
   skip_before_filter :verify_authenticity_token
 
