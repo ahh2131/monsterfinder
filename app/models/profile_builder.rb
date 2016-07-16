@@ -10,7 +10,7 @@ class ProfileBuilder
   def render
     {
       user: user,
-      monsters: MonsterBuilder.new(spots.active).render,
+      monsters: MonsterBuilder.new(spots).render,
       totalVotes: spots.inject(0, :+)
     }
   end
