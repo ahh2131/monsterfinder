@@ -16,10 +16,10 @@ class UsersController < ApplicationController
       Activity.create(
         user: u,
         monster: m,
-        activity_type: which_vote(params[:vote])
+        activity_type: 'upvote'
       )
     end
-    
+
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
