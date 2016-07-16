@@ -18,6 +18,6 @@ class MonsterBuilder
         upVotes: monster.activities.upVotes.count,
         downVotes: monster.activities.downVotes.count
       }
-    end.to_json
+    end
   end
 end
