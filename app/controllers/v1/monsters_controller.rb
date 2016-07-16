@@ -1,4 +1,5 @@
-class MonstersController < ApplicationController
+class V1::MonstersController < V1::BaseController
+
 
 
 
