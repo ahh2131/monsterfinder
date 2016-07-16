@@ -3,6 +3,9 @@ class V2::UsersController < V2::BaseController
   skip_before_filter :verify_authenticity_token
 
   def show
+    user = User.where(uuid: params[:id]).first
+    spots = user.monsters
+    render json: ProfileBuilder.new(user, spots).render.to_json
   end
 
   def vote
