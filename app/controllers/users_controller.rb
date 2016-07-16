@@ -29,4 +29,14 @@ class UsersController < ApplicationController
     params[:vote] == 'up' ? 'upvote' : 'downvote'
   end
 
+  def create
+    User.create(user_params)
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :uuid)
+  end
+
 end

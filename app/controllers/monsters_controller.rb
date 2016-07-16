@@ -26,6 +26,7 @@ class MonstersController < ApplicationController
     # this can be delayed job
     if params.key?(:uuid)
       m = Monster.create(monster_params)
+      # if user changes name, this doesnt work
       u = User.first_or_create!(uuid: params[:uuid], name: params[:name])
       Activity.create(user: u, monster: m, activity_type: "spot")
     end
