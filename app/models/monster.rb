@@ -159,6 +159,9 @@ class Monster < ActiveRecord::Base
     Zapdos
     Moltres
   )
+
+  has_many :activities
+
   validates :name, :lat, :lng, presence: true
   validates_inclusion_of :name, :in => MONSTERS - MISSING, :allow_nil => false
   geocoded_by :address, :latitude  => :lat, :longitude => :lng

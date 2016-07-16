@@ -13,7 +13,10 @@ class MonsterBuilder
         lat: monster.lat,
         lng: monster.lng,
         created_at: monster.created_at,
-        number: monster.number
+        number: monster.number,
+        spotterName: monster.activities.spot.first&.uuid,
+        upVotes: monster.activities.upVotes.count,
+        downVotes: monster.activities.downVotes.count
       }
     end.to_json
   end
