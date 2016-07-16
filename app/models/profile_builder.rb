@@ -11,7 +11,7 @@ class ProfileBuilder
     {
       user: user,
       monsters: MonsterBuilder.new(spots).render,
-      totalVotes: spots.inject(0, :+)
+      totalVotes: spots.map(&:total_vote_count).inject(0, &:+)
     }
   end
 
