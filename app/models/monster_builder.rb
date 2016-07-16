@@ -16,8 +16,9 @@ class MonsterBuilder
         created_at: monster.created_at,
         number: monster.number,
         spotterName: monster.activities.spot.first&.user&.name || "",
-        upVotes: monster.activities.upVotes.count,
-        downVotes: monster.activities.downVotes.count
+        upVotes: monster.upvote_count,
+        downVotes: monster.downvote_count,
+        totalVotes: monster.total_vote_count
       }
     end
   end
