@@ -9,6 +9,7 @@ class MonsterBuilder
   def render
     monsters.map do |monster|
       {
+        id: monster.id,
         name: monster.name,
         lat: monster.lat,
         lng: monster.lng,
