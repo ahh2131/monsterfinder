@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
-  root 'monsters#index'
   api_version(:module => "V2", :parameter => {:name => "version", :value => "2"}) do
+    get '' => 'monsters#index'
     resources :monsters
     resources :users
     get 'search/:monster' => 'monsters#search'
     match 'vote', to: 'users#vote', via: [:post]
   end
   api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}, :default => true) do
+    get '' => 'monsters#index'
     resources :monsters
     resources :users
     get 'search/:monster' => 'monsters#search'
