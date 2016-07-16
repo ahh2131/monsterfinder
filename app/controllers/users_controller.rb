@@ -5,11 +5,21 @@ class UsersController < ApplicationController
 
   def vote
     # needs uuid to make sure hasnt already voted
-    Activity.first_or_create(
-      user: User.where(uuid: params[:uuid]).first,
-      monster: Monster.find(params[:monster_id]),
-      activity_type: which_vote(params[:vote])
-    )
+    u = User.where(uuid: params[:uuid]).first
+    m = Monster.find(params[:monster_id])
+    a = Activity.where(
+      user: u,
+      monster: m,
+      activity_type: ['upvote', 'downvote']
+    ).first
+    if a.nil?
+      Activity.create(
+        user: u,
+        monster: m,
+        activity_type: which_vote(params[:vote])
+      )
+    end
+    
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
