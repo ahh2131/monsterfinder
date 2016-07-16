@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     get 'search/:monster' => 'monsters#search'
     match 'vote', to: 'users#vote', via: [:post]
+    match 'hide', to: 'monsters#hide', via: [:post]
   end
   api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}, :default => true) do
     get '' => 'monsters#index'

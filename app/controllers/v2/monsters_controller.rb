@@ -57,6 +57,14 @@ class V2::MonstersController < V2::BaseController
     params[:lat].to_f != 0.0 && params[:lng].to_f != 0.0
   end
 
+  # delayed job
+  def hide
+    m = Monster.find(params[:monster_id])
+    m.active = false
+    m.save
+    render :nothing => true, :status => 200, :content_type => 'text/html'
+  end
+
   private
 
   def monster_params
