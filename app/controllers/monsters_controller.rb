@@ -24,8 +24,8 @@ class MonstersController < ApplicationController
   def create
     # check if name is a real pokemon
     # this can be delayed job
-    m = Monster.create(monster_params)
     if params.key?(:uuid)
+      m = Monster.create(monster_params)
       u = User.first_or_create!(uuid: params[:uuid], name: params[:name])
       Activity.create(user: u, monster: m, activity_type: "spot")
     end
