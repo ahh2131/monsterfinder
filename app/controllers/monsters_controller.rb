@@ -13,12 +13,12 @@ class MonstersController < ApplicationController
     m = []
     if coordinates_exist?
       m = if params[:recent] == 'true'
-            Monster.recent.near(coordinates, DISTANCE).all.to_json
+            Monster.recent.near(coordinates, DISTANCE).all
           else
-            Monster.near(coordinates, DISTANCE).all.to_json
+            Monster.near(coordinates, DISTANCE).all
           end
     end
-    render json: m
+    render json: MonsterBuilder.new(m).render
   end
 
   def create
