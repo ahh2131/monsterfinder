@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     a = Activity.where(
       user: u,
       monster: m,
-      activity_type: ["upvote", "downvote"]
+      activity_type: [1, 2]
     ).first
     if a.nil?
       Activity.create(
