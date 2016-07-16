@@ -18,6 +18,7 @@ class MonstersController < ApplicationController
             Monster.with_associations.near(coordinates, DISTANCE).all
           end
     end
+    m  = Monster.all
     render json: MonsterBuilder.new(m).render
   end
 
