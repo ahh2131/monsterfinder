@@ -15,6 +15,7 @@ class MonstersController < ApplicationController
       m = Monster
           .with_associations
           .recent(params[:recent] == 'true')
+          .highly_rated(params[:rated] == 'true')
           .near(coordinates, DISTANCE)
           .all
     end

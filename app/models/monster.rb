@@ -160,6 +160,8 @@ class Monster < ActiveRecord::Base
     Moltres
   )
 
+  VOTE_THRESHOLD = 5
+
   has_many :activities
 
   validates :name, :lat, :lng, presence: true
@@ -167,9 +169,11 @@ class Monster < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
 
   scope :recent, -> (condition) { where(created_at: 1.hours.ago..Time.now) if condition}
+  scope :highly_rated, -> (condition) { where("total_vote_count > ?", VOTE_THRESHOLD) if condition}
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :with_associations, -> { includes(:activities, activities: [:user]) }
+
   def self.default_scope
     active
   end
