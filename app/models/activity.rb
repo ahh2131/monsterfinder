@@ -1,4 +1,7 @@
 class Activity < ActiveRecord::Base
+  after_save :update_counter_cache
+  after_destroy :update_counter_cache
+  
   belongs_to :monster
   belongs_to :user
   scope :spot, -> { where(activity_type: 0) }
@@ -11,6 +14,17 @@ class Activity < ActiveRecord::Base
     "upvote" => 1,
     "downvote" => 2
   }
+
+  def update_counter_cache
+    case activity_type
+    when "upvote"
+      monster.upvote_count = Activity.where(monster: monster).upVotes.count
+      monster.save!
+    when "downvote"
+      monster.downvote_count = Activity.where(monster: monster).downVotes.count
+      monster.save!
+    end
+  end
 
 
 end
