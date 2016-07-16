@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token
+
   def show
   end
 
@@ -16,7 +18,7 @@ class UsersController < ApplicationController
       Activity.create(
         user: u,
         monster: m,
-        activity_type: 'upvote'
+        activity_type: which_vote(params[:vote])
       )
     end
 
