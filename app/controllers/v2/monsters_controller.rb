@@ -19,6 +19,10 @@ class V2::MonstersController < V2::BaseController
           .highly_rated(params[:rated] == 'true')
           .near(coordinates, DISTANCE)
           .all
+      u = User.where(uuid: params[:uuid]).first
+      u.lat = params[:lat]
+      u.lng = params[:lng]
+      u.save
     end
     render json: MonsterBuilder.new(m).render.as_json
   end

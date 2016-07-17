@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     get 'search/:monster' => 'monsters#search'
     match 'vote', to: 'users#vote', via: [:post]
     match 'hide', to: 'monsters#hide', via: [:post]
+    match 'user/remove_notifications', to: 'users#remove_notifications', via: [:post]
+    match 'user/update_channel_id', to: 'users#update_channel_id', via: [:post]
+    match 'user/replace_notification', to: 'users#replace_notification', via: [:post]
   end
   api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}, :default => true) do
     get '' => 'monsters#index'

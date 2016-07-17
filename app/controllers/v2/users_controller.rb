@@ -28,6 +28,36 @@ class V2::UsersController < V2::BaseController
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
+  def update_channel_id
+    u = User.where(uuid: params[:uuid]).first
+    u.channel_id = params[:channel_id]
+    u.save
+    render :nothing => true, :status => 200, :content_type => 'text/html'
+  end
+
+  def remove_notifications
+    Activity.where(user: User.where(uuid: params[:uuid]).first).notifications.destroy_all
+  end
+
+  def replace_notification
+    remove = Monster::MONSTER.index(params[:remove])
+    add = Monster::MONSTER.index(params[:add])
+    if remove
+      a = Activity.where(
+        user: User.where(uuid: params[:uuid]).first,
+        activity_type: "notify",
+        monster_number: remove
+      ).destroy_all
+    end
+    if add
+      a = Activity.new
+      a.activity_type = "notify"
+      a.user = User.where(uuid: params[:uuid]).first
+      a.monster_number = add
+      a.save
+    end
+  end
+
   def which_vote
     params[:vote] == 'up' ? 'upvote' : 'downvote'
   end
