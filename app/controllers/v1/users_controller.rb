@@ -31,6 +31,7 @@ class V1::UsersController < V1::BaseController
 
   def create
     User.create(user_params)
+    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   private
