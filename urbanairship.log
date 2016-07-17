@@ -1,0 +1,19 @@
+# Logfile created on 2016-07-16 21:56:18 -0400 by logger.rb/53141
+D, [2016-07-16 21:56:18#74257] DEBUG -- Urbanairship: Making POST request to https://go.urbanairship.com/api/push/.
+	Headers:
+		content-type: application/json
+		accept: application/vnd.urbanairship+json; version=3
+	Body:
+{"audience":"all","notification":{"alert":"Hello"},"device_types":"all"}
+D, [2016-07-16 21:56:19#74257] DEBUG -- Urbanairship: Received 202 response. Headers:
+	{:content_type=>"application/vnd.urbanairship+json;version=3", :data_attribute=>"push_ids", :cache_control=>"max-age=0", :expires=>"Sun, 17 Jul 2016 01:56:19 GMT", :last_modified=>"Sun, 17 Jul 2016 01:56:19 GMT", :content_length=>"152", :date=>"Sun, 17 Jul 2016 01:56:19 GMT", :connection=>"keep-alive"}
+Body:
+	{"ok"=>true, "operation_id"=>"a5bb01d7-b9b3-46b7-9d7d-4254bab96226", "push_ids"=>["3049df48-4d16-4043-8b40-20b1a5bdf171"], "message_ids"=>[], "content_urls"=>[]}
+I, [2016-07-16 21:56:19#74257]  INFO -- Urbanairship: Received [202] response code. 
+Headers: 	Body:
+ok:	true
+operation_id:	a5bb01d7-b9b3-46b7-9d7d-4254bab96226
+push_ids:	["3049df48-4d16-4043-8b40-20b1a5bdf171"]
+message_ids:	[]
+content_urls:	[]
+
