@@ -46,9 +46,10 @@ class V2::UsersController < V2::BaseController
     if remove
       a = Activity.where(
         user: User.where(uuid: params[:uuid]).first,
-        activity_type: "notify",
+        activity_type: 3,
         monster_number: remove
-      ).destroy_all
+      )
+      a.destroy_all
     end
     if add
       a = Activity.new
