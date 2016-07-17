@@ -40,8 +40,8 @@ class V2::UsersController < V2::BaseController
   end
 
   def replace_notification
-    remove = Monster::MONSTER.index(params[:remove])
-    add = Monster::MONSTER.index(params[:add])
+    remove = Monster::MONSTERS.index(params[:remove])
+    add = Monster::MONSTERS.index(params[:add])
     if remove
       a = Activity.where(
         user: User.where(uuid: params[:uuid]).first,
