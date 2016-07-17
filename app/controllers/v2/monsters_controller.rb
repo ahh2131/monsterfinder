@@ -15,9 +15,8 @@ class V2::MonstersController < V2::BaseController
     if coordinates_exist?
       m = Monster
           .with_associations
-          .recent(params[:recent] == 'true')
-          .highly_rated(params[:rated] == 'true')
           .near(coordinates, DISTANCE)
+          .highly_rated(params[:rated] == 'true')
           .all
       u = User.where(uuid: params[:uuid]).first
       u.lat = params[:lat]
