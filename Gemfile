@@ -10,6 +10,7 @@ gem 'figaro'
 gem 'pg', '~> 0.15'
 gem 'unicorn'
 # Use SCSS for stylesheets
+gem 'delayed_job_active_record'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

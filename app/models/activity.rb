@@ -11,6 +11,8 @@ class Activity < ActiveRecord::Base
   validates_inclusion_of :activity_type, :in => ["spot", "upvote", "downvote", "notify"], :allow_nil => false
 
   VOTE_MINIMUM = -5
+  NOTIFICATION_VOTES = 5
+  NEARBY_MONSTER_DISTANCE = 5
 
   enum activity_type: {
     "spot" => 0,
@@ -24,6 +26,10 @@ class Activity < ActiveRecord::Base
     when "upvote"
       monster.upvote_count = Activity.where(monster: monster).upVotes.count
       update_total_vote_count
+      if !monster&.seen && monster.total_vote_count == NOTIFICATION_VOTES
+        delay.send_notifications(monster)
+        monster.seen = true
+      end
       monster.save!
     when "downvote"
       monster.downvote_count = Activity.where(monster: monster).downVotes.count
@@ -36,6 +42,24 @@ class Activity < ActiveRecord::Base
     monster.total_vote_count = monster.upvote_count - monster.downvote_count
     if monster.total_vote_count < VOTE_MINIMUM
       monster.active = false
+    end
+  end
+
+  def send_notifications(monster)
+    nearby_users = User.near([monster.lat, monster.lng], NEARBY_MONSTER_DISTANCE)
+    if nearby_users.count(:all) > 0
+      notifications = Activity.notifications.where(user_id: nearby_users.map(&:id).join(","))
+        .where(monster_number: Monster::MONSTERS.index(monster.name))
+
+      airship = Urbanairship::Client.new(key:Figaro.env.ua_application_key, secret:Figaro.env.ua_master_secret)
+      push = airship.create_push
+      push.notification = Urbanairship.notification(alert: "A monster you are looking for is nearby!")
+      push.device_types = Urbanairship.device_types(['ios'])
+
+      push.audience = Urbanairship.or(*notifications.map{ |n| Urbanairship.ios_channel(n.user.channel_id) } )
+      push.send_push
+
+      monster.save!
     end
   end
 
