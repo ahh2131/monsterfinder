@@ -37,6 +37,7 @@ class V2::UsersController < V2::BaseController
 
   def remove_notifications
     Activity.where(user: User.where(uuid: params[:uuid]).first).notifications.destroy_all
+    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   def replace_notification
@@ -56,6 +57,8 @@ class V2::UsersController < V2::BaseController
       a.monster_number = add
       a.save
     end
+
+    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   def which_vote
