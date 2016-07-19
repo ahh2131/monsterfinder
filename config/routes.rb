@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  api_version(:module => "V3", :parameter => {:name => "version", :value => "3"}) do
+    get '' => 'monsters#index'
+    resources :monsters
+    resources :users
+    get 'search/:monster' => 'monsters#search'
+    match 'vote', to: 'users#vote', via: [:post]
+    match 'hide', to: 'monsters#hide', via: [:post]
+    match 'remove_notifications', to: 'users#remove_notifications', via: [:post]
+    match 'update_channel_id', to: 'users#update_channel_id', via: [:post]
+    match 'replace_notification', to: 'users#replace_notification', via: [:post]
+  end
   api_version(:module => "V2", :parameter => {:name => "version", :value => "2"}) do
     get '' => 'monsters#index'
     resources :monsters

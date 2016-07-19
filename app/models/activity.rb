@@ -10,7 +10,7 @@ class Activity < ActiveRecord::Base
   scope :notifications, -> { where(activity_type: 3 ) }
   validates_inclusion_of :activity_type, :in => ["spot", "upvote", "downvote", "notify"], :allow_nil => false
 
-  VOTE_MINIMUM = -5
+  VOTE_MINIMUM = 0
   NOTIFICATION_VOTES = 5
   NEARBY_MONSTER_DISTANCE = 5
 
