@@ -36,7 +36,7 @@ class V2::MonstersController < V2::BaseController
     if params.key?(:uuid)
       m = Monster.create(monster_params)
       # if user changes name, this doesnt work
-      u = User.where(uuid: params[:uuid], name: params[:name]).first
+      u = User.where(uuid: params[:uuid], name: params[:name]).last
       if u.nil?
         u = User.create(uuid: params[:uuid], name: params[:name])
       end
