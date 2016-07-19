@@ -68,6 +68,7 @@ class V2::UsersController < V2::BaseController
 
   def create
     User.create(user_params)
+    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   private
