@@ -3,7 +3,7 @@ class V2::UsersController < V2::BaseController
   skip_before_filter :verify_authenticity_token
 
   def show
-    user = User.where(uuid: params[:id]).first
+    user = User.where(uuid: params[:id]).last
     spots = []
     if user
       spots = user.monsters.order("total_vote_count desc")
