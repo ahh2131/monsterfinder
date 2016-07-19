@@ -20,9 +20,11 @@ class V2::MonstersController < V2::BaseController
           .all
       if params[:uuid]
         u = User.where(uuid: params[:uuid]).first
-        u.lat = params[:lat]
-        u.lng = params[:lng]
-        u.save
+        if u
+          u.lat = params[:lat]
+          u.lng = params[:lng]
+          u.save
+        end
       end
     end
     render json: MonsterBuilder.new(m).render.as_json
