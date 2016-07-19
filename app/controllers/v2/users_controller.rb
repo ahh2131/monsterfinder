@@ -32,9 +32,13 @@ class V2::UsersController < V2::BaseController
   end
 
   def update_channel_id
-    u = User.where(uuid: params[:uuid]).first
-    u.channel_id = params[:channel_id]
-    u.save
+    u = User.where(uuid: params[:uuid]).last
+    # there shouldnt be rollbars about this - a user should exist at this point.
+    if u.nil?
+      u = User.create(uuid: params[:uuid], name: params[:name])
+      u.channel_id = params[:channel_id]
+      u.save
+    end
     render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
