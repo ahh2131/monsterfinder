@@ -38,7 +38,7 @@ class V2::MonstersController < V2::BaseController
       # if user changes name, this doesnt work
       u = User.where(uuid: params[:uuid], name: params[:name]).first
       if u.nil?
-        u = User.create(uuid: params[:uuid], name: params[:name]).first
+        u = User.create(uuid: params[:uuid], name: params[:name])
       end
       Activity.create(user: u, monster: m, activity_type: "spot")
     end
