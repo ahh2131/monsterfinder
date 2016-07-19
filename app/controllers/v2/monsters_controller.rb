@@ -36,7 +36,10 @@ class V2::MonstersController < V2::BaseController
     if params.key?(:uuid)
       m = Monster.create(monster_params)
       # if user changes name, this doesnt work
-      u = User.first_or_create!(uuid: params[:uuid], name: params[:name])
+      u = User.where(uuid: params[:uuid], name: params[:name]).first
+      if u.nil?
+        u = User.create(uuid: params[:uuid], name: params[:name]).first
+      end
       Activity.create(user: u, monster: m, activity_type: "spot")
     end
     render :nothing => true, :status => 200, :content_type => 'text/html'
