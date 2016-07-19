@@ -4,7 +4,10 @@ class V2::UsersController < V2::BaseController
 
   def show
     user = User.where(uuid: params[:id]).first
-    spots = user.monsters.order("total_vote_count desc")
+    spots = []
+    if user
+      spots = user.monsters.order("total_vote_count desc")
+    end
     render json: ProfileBuilder.new(user, spots).render.to_json
   end
 
