@@ -18,10 +18,12 @@ class V2::MonstersController < V2::BaseController
           .with_associations
           .highly_rated(params[:rated] == 'true')
           .all
-      u = User.where(uuid: params[:uuid]).first
-      u.lat = params[:lat]
-      u.lng = params[:lng]
-      u.save
+      if params[:uuid]
+        u = User.where(uuid: params[:uuid]).first
+        u.lat = params[:lat]
+        u.lng = params[:lng]
+        u.save
+      end
     end
     render json: MonsterBuilder.new(m).render.as_json
   end
