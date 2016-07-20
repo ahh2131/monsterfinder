@@ -26,7 +26,7 @@ class Activity < ActiveRecord::Base
     when "upvote"
       monster.upvote_count = Activity.where(monster: monster).upVotes.count
       update_total_vote_count
-      if !monster&.seen && monster.total_vote_count == NOTIFICATION_VOTES
+      if !monster.seen && monster.total_vote_count == NOTIFICATION_VOTES
         delay.send_notifications(monster)
         monster.seen = true
       end
