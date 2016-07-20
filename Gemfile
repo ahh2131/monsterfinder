@@ -9,6 +9,7 @@ gem 'rack-attack'
 gem 'figaro'
 gem 'dalli'
 # Use postgresql as the database for Active Record
+gem 'connection_pool'
 gem 'pg', '~> 0.15'
 gem 'unicorn'
 # Use SCSS for stylesheets
