@@ -7,6 +7,7 @@ gem 'versionist'
 gem 'urbanairship'
 gem 'rack-attack'
 gem 'figaro'
+gem 'dalli'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 gem 'unicorn'
