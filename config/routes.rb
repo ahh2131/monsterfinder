@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     match 'remove_notifications', to: 'users#remove_notifications', via: [:post]
     match 'update_channel_id', to: 'users#update_channel_id', via: [:post]
     match 'replace_notification', to: 'users#replace_notification', via: [:post]
+    match 'get_chatroom', to: 'chatrooms#get_chatroom', via: [:get]
   end
   api_version(:module => "V2", :parameter => {:name => "version", :value => "2"}) do
     get '' => 'monsters#index'
