@@ -11,26 +11,23 @@ class V2::MonstersController < V2::BaseController
     #render json: Monster.where.not(lat: nil).order('created_at desc')
     #  .where(created_at: 3.hours.ago..Time.now).all.to_json
     #expires_in 5.minutes, :public => true
-    if params[:uuid] && params[:uuid] != "B8F90E0C-DCEB-499D-8E16-17AFECD07937"
-      m = []
-      if coordinates_exist?
-        m = Monster
-            .near(coordinates, DISTANCE)
-            .with_associations
-            .highly_rated(params[:rated] == 'true')
-            .all
-        if params[:uuid]
-          u = User.where(uuid: params[:uuid]).first
-          if u
-            u.lat = params[:lat]
-            u.lng = params[:lng]
-            u.save
-          end
+    m = []
+    if coordinates_exist?
+      m = Monster
+      .near(coordinates, DISTANCE)
+      .with_associations
+      .highly_rated(params[:rated] == 'true')
+      .all
+      if params[:uuid]
+        u = User.where(uuid: params[:uuid]).first
+        if u
+          u.lat = params[:lat]
+          u.lng = params[:lng]
+          u.save
         end
       end
-      return render json: MonsterBuilder.new(m).render.as_json
     end
-    render :nothing => true, :status => 200, :content_type => 'text/html'
+    return render json: MonsterBuilder.new(m).render.as_json
   end
 
   def create
