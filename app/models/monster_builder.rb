@@ -13,7 +13,7 @@ class MonsterBuilder
         name: monster.name,
         lat: monster.lat,
         lng: monster.lng,
-        created_at: time_ago_in_words(monster.created_at) + " ago",
+        created_at: monster.created_at,
         number: monster.number,
         spotterName: monster.activities.spot.first&.user&.name || "",
         upVotes: monster.upvote_count,
