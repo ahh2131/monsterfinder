@@ -1,5 +1,5 @@
+include ActionView::Helpers::DateHelper
 class MonsterBuilder
-
   attr_accessor :monsters
 
   def initialize(monsters)
@@ -13,7 +13,7 @@ class MonsterBuilder
         name: monster.name,
         lat: monster.lat,
         lng: monster.lng,
-        created_at: monster.created_at,
+        created_at: time_ago_in_words(monster.created_at) + " ago",
         number: monster.number,
         spotterName: monster.activities.spot.first&.user&.name || "",
         upVotes: monster.upvote_count,
