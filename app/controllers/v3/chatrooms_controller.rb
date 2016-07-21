@@ -9,7 +9,6 @@ class V3::ChatroomsController < V3::BaseController
       u.lng = lng
       u.save
     end
-
     render json: ChatroomBuilder.new(lat, lng).render.to_json
   end
 end
