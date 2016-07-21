@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717161337) do
+ActiveRecord::Schema.define(version: 20160721000412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20160717161337) do
 
   add_index "activities", ["monster_id"], name: "index_activities_on_monster_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
+
+  create_table "chatrooms", force: :cascade do |t|
+    t.datetime "last_joined_at"
+    t.decimal  "lat",            precision: 10, scale: 6
+    t.decimal  "lng",            precision: 10, scale: 6
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -56,16 +64,18 @@ ActiveRecord::Schema.define(version: 20160717161337) do
     t.integer  "downvote_count",                            default: 0
     t.integer  "total_vote_count",                          default: 0
     t.boolean  "seen",                                      default: false
+    t.datetime "expires_at"
   end
 
   create_table "users", force: :cascade do |t|
     t.text     "uuid"
     t.text     "name"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.text     "channel_id"
-    t.decimal  "lat",        precision: 10, scale: 6
-    t.decimal  "lng",        precision: 10, scale: 6
+    t.decimal  "lat",                 precision: 10, scale: 6
+    t.decimal  "lng",                 precision: 10, scale: 6
+    t.datetime "monsters_checked_at"
   end
 
   add_foreign_key "activities", "monsters"

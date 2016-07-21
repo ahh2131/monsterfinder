@@ -1,6 +1,15 @@
 class V3::ChatroomsController < V3::BaseController
 
   def get_chatroom
-    render json: ChatroomBuilder.new(2).render.to_json
+    lat = params[:lat]
+    lng = params[:lng]
+    u = User.where(uuid: params[:uuid]).first
+    if u
+      u.lat = lat
+      u.lng = lng
+      u.save
+    end
+
+    render json: ChatroomBuilder.new(lat, lng).render.to_json
   end
 end
