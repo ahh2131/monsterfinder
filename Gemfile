@@ -8,6 +8,8 @@ gem 'urbanairship'
 gem 'rack-attack'
 gem 'figaro'
 gem 'dalli'
+gem 'faraday'
+gem 'pry'
 # Use postgresql as the database for Active Record
 gem 'connection_pool'
 gem 'pg', '~> 0.15'

@@ -26,6 +26,9 @@ class V3::MonstersController < V3::BaseController
           u.save
         end
       end
+      if Monster.near(coordinates, 0.07).where('expires_at < ?', Time.now - 10.minutes).first.nil?
+        Monster.get_real_monsters(params[:lat], params[:lng])
+      end
     end
     render json: MonsterBuilder.new(m).render.as_json
   end

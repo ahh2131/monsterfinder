@@ -173,18 +173,57 @@ class Monster < ActiveRecord::Base
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :with_associations, -> { includes(:activities, activities: [:user]) }
+  scope :not_expired, -> { where("expires_at > ? OR expires_at IS NULL", Time.now) }
 
   def self.default_scope
-    active
+    active.not_expired
+  end
+
+  def self.get_real_monsters(lat, lng)
+    delay.request_monsters(lat, lng)
+  end
+
+  def self.request_monsters(lat, lng)
+    p "request monsters"
+    response = Faraday.get do |req|
+      req.url "https://real-monsters.herokuapp.com/" + "?longitude=" + lng.to_s + "&latitude=" + lat.to_s
+    end
+    monsters = JSON.parse(response.body)
+    monsters["pokemons"].each do |key, monster|
+      near_monster = Monster.near([monster["lat"], monster["lng"]], 0.01).where(name: monster["monster_name"]).first
+      if !near_monster || near_monster.expires_at < Time.now
+        m = Monster.new
+        m.name = get_name_from_pokemon_number(monster["pokemon_data"]["pokemon_id"])
+        m.lat = monster["latitude"]
+        m.lng = monster["longitude"]
+        m.number = monster["pokemon_data"]["pokemon_id"]
+        m.expires_at = Time.at(monster["hides_at"])
+        m.payload = monster
+        m.save
+      end
+    end
   end
 
   before_save do
     monster_index = MONSTERS.index(name)
-    self.number = if monster_index >= 31
-                    monster_index + 2
-                  else
-                    monster_index + 1
-                  end
+    self.number = get_actual_number(monster_index)
+  end
+
+  # bc nidoran and i am lazy
+  def get_actual_number(number)
+    if number >= 31
+      return number + 2
+    else
+      return number + 1
+    end
+  end
+
+  def self.get_name_from_pokemon_number(pokemon_number)
+    if pokemon_number < 31
+      return MONSTERS[pokemon_number - 1]
+    else
+      return MONSTERS[pokemon_number - 2]
+    end
   end
 
 end

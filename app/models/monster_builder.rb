@@ -18,7 +18,8 @@ class MonsterBuilder
         spotterName: monster.activities.spot.first&.user&.name || "",
         upVotes: monster.upvote_count,
         downVotes: monster.downvote_count,
-        totalVotes: monster.total_vote_count
+        totalVotes: monster.total_vote_count,
+        expires_at: monster.expires_at
       }
     end
   end
