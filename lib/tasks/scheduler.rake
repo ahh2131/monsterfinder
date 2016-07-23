@@ -2,7 +2,7 @@ desc "This task is called by the Heroku scheduler add-on"
 task :update_monsters => :environment do
   puts "Updating monsters..."
   [
-    # central park 
+    # central park
     {
       lat: 40.7140535395972,
       lng: -73.9873472136203
@@ -44,7 +44,7 @@ task :update_monsters => :environment do
       lng: -73.972789
     }
   ].each do |c|
-    Monster.request_monsters(c["lat"], c["lng"])
+    Monster.request_monsters(c[:lat], c[:lng])
   end
   puts "done."
 end
