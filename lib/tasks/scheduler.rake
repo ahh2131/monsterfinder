@@ -101,6 +101,10 @@ task :update_monsters_les_queens_bk => :environment do
   puts "Updating monsters..."
   [
     {
+      lat: 40.764037,
+      lng: -73.810038
+    },
+    {
       lat: 40.720714,
       lng: -73.981475
     },
