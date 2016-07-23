@@ -201,18 +201,25 @@ class Monster < ActiveRecord::Base
       response = Faraday.get do |req|
         req.url "https://real-monsters.herokuapp.com/" + "?longitude=" + lng.to_s + "&latitude=" + lat.to_s
       end
-      monsters = JSON.parse(response.body)
-      monsters["pokemons"].each do |key, monster|
-        near_monster = Monster.near([monster["lat"], monster["lng"]], 0.01).where(name: monster["monster_name"]).first
-        if !near_monster || near_monster.expires_at < Time.now
-          m = Monster.new
-          m.name = get_name_from_pokemon_number(monster["pokemon_data"]["pokemon_id"])
-          m.lat = monster["latitude"]
-          m.lng = monster["longitude"]
-          m.number = monster["pokemon_data"]["pokemon_id"]
-          m.expires_at = Time.at(monster["hides_at"])
-          m.payload = monster
-          m.save
+      monsters = nil
+      begin
+        monsters = JSON.parse(response.body)
+      rescue
+        p "No server response"
+      end
+      if monsters
+        monsters["pokemons"].each do |key, monster|
+          near_monster = Monster.near([monster["lat"], monster["lng"]], 0.01).where(name: monster["monster_name"]).first
+          if !near_monster || near_monster.expires_at < Time.now
+            m = Monster.new
+            m.name = get_name_from_pokemon_number(monster["pokemon_data"]["pokemon_id"])
+            m.lat = monster["latitude"]
+            m.lng = monster["longitude"]
+            m.number = monster["pokemon_data"]["pokemon_id"]
+            m.expires_at = Time.at(monster["hides_at"])
+            m.payload = monster
+            m.save
+          end
         end
       end
     end
