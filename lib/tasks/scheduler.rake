@@ -105,3 +105,43 @@ task :update_monsters_popular => :environment do
   end
   puts "done."
 end
+task :update_monsters_brooklyn => :environment do
+  puts "Updating monsters..."
+  [
+    {
+      lat: 40.670214,
+      lng: -73.954782
+    },
+    {
+      lat: 40.668326,
+      lng: -73.926715
+    },
+    {
+      lat: 40.649965,
+      lng: -73.941650
+    },
+    {
+      lat: 40.660774,
+      lng: -73.974437
+    },
+    {
+      lat: 40.668522,
+      lng: -73.972463
+    },
+    {
+      lat: 40.666178,
+      lng: -73.983964
+    },
+    {
+      lat: 40.674316,
+      lng: -73.980617
+    },
+    {
+      lat: 40.675358,
+      lng: -73.917016
+    }
+  ].each do |c|
+    Monster.request_monsters(c[:lat], c[:lng])
+  end
+  puts "done."
+end
