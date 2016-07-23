@@ -168,6 +168,10 @@ class Monster < ActiveRecord::Base
     Zubat
     Spearow
     Weedle
+    Bellsprout
+    Nidoran
+    Paras
+    Voltorb
   )
 
   VOTE_THRESHOLD = 5
