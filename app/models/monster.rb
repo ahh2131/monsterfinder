@@ -196,7 +196,7 @@ class Monster < ActiveRecord::Base
 
   def self.request_monsters(lat, lng)
     p "request monsters"
-    if Monster.near([lat, lng], 0.07).where('expires_at < ?', Time.now - 10.minutes).first.nil?
+  #  if Monster.near([lat, lng], 0.07).where('expires_at < ?', Time.now - 10.minutes).first.nil?
       url = ""
       response = Faraday.get do |req|
         url = "https://real-monsters.herokuapp.com/" + "?longitude=" + lng.to_s + "&latitude=" + lat.to_s
@@ -224,7 +224,7 @@ class Monster < ActiveRecord::Base
           end
         end
       end
-    end
+    #end
   end
 
   before_save do
