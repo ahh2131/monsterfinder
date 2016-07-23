@@ -160,6 +160,16 @@ class Monster < ActiveRecord::Base
     Moltres
   )
 
+  DONT_INCLUDE = %w(
+    Doduo
+    Pinsir
+    Rattata
+    Pidgey
+    Zubat
+    Spearow
+    Weedle
+  )
+
   VOTE_THRESHOLD = 5
 
   has_many :activities
@@ -174,9 +184,10 @@ class Monster < ActiveRecord::Base
   scope :inactive, -> { where(active: false) }
   scope :with_associations, -> { includes(:activities, activities: [:user]) }
   scope :not_expired, -> { where("expires_at > ? OR expires_at IS NULL", Time.now) }
+  scope :no_common, -> { where.not(name: DONT_INCLUDE) }
 
   def self.default_scope
-    active.not_expired
+    active
   end
 
   def self.get_real_monsters(lat, lng)

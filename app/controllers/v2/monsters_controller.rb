@@ -15,7 +15,9 @@ class V2::MonstersController < V2::BaseController
     if coordinates_exist?
       m = Monster
       .near(coordinates, DISTANCE)
-      .where("created_at > ?", Time.now - 3.days)
+      .where("created_at > ?", Time.now - 1.days)
+      .no_common
+      .not_expired
       .with_associations
       .highly_rated(params[:rated] == 'true')
       .all
