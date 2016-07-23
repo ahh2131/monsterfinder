@@ -261,13 +261,13 @@ class Monster < ActiveRecord::Base
       end
     end
   end
-
+"""
   after_create do
     if !expires_at.nil?
       delay.send_notifications(self)
     end
   end
-
+"""
   # duplicate - move into notifier class
   def send_notifications(monster)
     nearby_users = User.near([monster.lat, monster.lng], NEARBY_MONSTER_DISTANCE)
