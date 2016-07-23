@@ -176,6 +176,9 @@ class Monster < ActiveRecord::Base
 
   VOTE_THRESHOLD = 5
 
+  NEARBY_MONSTER_DISTANCE = 1
+
+
   has_many :activities
 
   validates :name, :lat, :lng, presence: true
@@ -256,6 +259,31 @@ class Monster < ActiveRecord::Base
       else
         return MONSTERS[pokemon_number - 2]
       end
+    end
+  end
+
+  after_create do
+    if !expires_at.nil?
+      delay.send_notifications(self)
+    end
+  end
+
+  # duplicate - move into notifier class
+  def send_notifications(monster)
+    nearby_users = User.near([monster.lat, monster.lng], NEARBY_MONSTER_DISTANCE)
+    if nearby_users.count(:all) > 0
+      notifications = Activity.notifications.where(user_id: nearby_users.map(&:id).join(","))
+        .where(monster_number: Monster::MONSTERS.index(monster.name))
+
+      airship = Urbanairship::Client.new(key:Figaro.env.ua_application_key, secret:Figaro.env.ua_master_secret)
+      push = airship.create_push
+      push.notification = Urbanairship.notification(alert: "A monster you are looking for is nearby!")
+      push.device_types = Urbanairship.device_types(['ios'])
+
+      push.audience = Urbanairship.or(*notifications.map{ |n| Urbanairship.ios_channel(n.user.channel_id) } )
+      push.send_push
+
+      monster.save!
     end
   end
 

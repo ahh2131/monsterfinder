@@ -12,7 +12,7 @@ class Activity < ActiveRecord::Base
 
   VOTE_MINIMUM = 0
   NOTIFICATION_VOTES = 5
-  NEARBY_MONSTER_DISTANCE = 5
+  NEARBY_MONSTER_DISTANCE = 1
 
   enum activity_type: {
     "spot" => 0,
