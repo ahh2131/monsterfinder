@@ -26,7 +26,7 @@ class MonsterBuilder
 
   def getExpiresAt(monster)
     if monster.expires_at
-      return "Expires at: " + monster.expires_at.strftime("%I:%M%p, %b %e") + " EST"
+      return "Expires at: " + monster.expires_at.in_time_zone("Eastern Time (US & Canada)").strftime("%I:%M%p, %b %e") + " EST"
     else
       return ""
     end
