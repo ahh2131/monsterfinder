@@ -20,7 +20,8 @@ class MonsterBuilder
         downVotes: monster.downvote_count,
         totalVotes: monster.total_vote_count,
         expiresAt: monster.expires_at || "",
-        verified: !monster.expires_at.nil?
+        # circles are annoying
+        verified: false
       }
     end
   end
