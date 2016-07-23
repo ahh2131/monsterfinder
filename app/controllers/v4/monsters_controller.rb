@@ -16,6 +16,9 @@ class V4::MonstersController < V4::BaseController
       m = Monster
           .near(coordinates, DISTANCE)
           .with_associations
+          .where("created_at > ?", Time.now - 1.days)
+          .no_common
+          .not_expired
           .highly_rated(params[:rated] == 'true')
           .all
       if params[:uuid]
@@ -25,6 +28,9 @@ class V4::MonstersController < V4::BaseController
           u.lng = params[:lng]
           u.save
         end
+      end
+      if Monster.near(coordinates, 0.07).where('expires_at < ?', Time.now - 10.minutes).first.nil?
+        Monster.get_real_monsters(params[:lat], params[:lng])
       end
     end
     render json: MonsterBuilder.new(m).render.as_json
