@@ -15,7 +15,7 @@ class MonsterBuilder
         lng: monster.lng,
         created_at: monster.created_at,
         number: monster.number,
-        spotterName: monster.activities.spot.first&.user&.name || getExpiresAt,
+        spotterName: monster.activities.spot.first&.user&.name || getExpiresAt(monster),
         upVotes: monster.upvote_count,
         downVotes: monster.downvote_count,
         totalVotes: monster.total_vote_count,
@@ -24,7 +24,7 @@ class MonsterBuilder
     end
   end
 
-  def getExpiresAt
+  def getExpiresAt(monster)
     if monster.expires_at
       return "Expires at: " + monster.expires_at.strftime("%I:%M%p, %b %e")
     else
