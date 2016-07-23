@@ -19,7 +19,8 @@ class MonsterBuilder
         upVotes: monster.upvote_count,
         downVotes: monster.downvote_count,
         totalVotes: monster.total_vote_count,
-        expires_at: monster.expires_at
+        expiresAt: monster.expires_at || "",
+        verified: !monster.expires_at.nil?
       }
     end
   end
