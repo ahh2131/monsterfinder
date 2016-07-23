@@ -245,7 +245,13 @@ class Monster < ActiveRecord::Base
     if pokemon_number < 31
       return MONSTERS[pokemon_number - 1]
     else
-      return MONSTERS[pokemon_number - 2]
+      if pokemon_number == 32
+        return "Nidoran"
+      elsif pokemon_number == 31
+        return "Nidoqueen"
+      else
+        return MONSTERS[pokemon_number - 2]
+      end
     end
   end
 
