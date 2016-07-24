@@ -386,3 +386,7 @@ task :update_monsters_upper => :environment do
   end
   puts "done."
 end
+task :remove_expired_monsters => :environment do
+  Monster.where("expires_at < ?", Time.now).update_all(active: false)
+  puts "done."
+end
