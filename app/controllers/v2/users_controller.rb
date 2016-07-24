@@ -32,7 +32,7 @@ class V2::UsersController < V2::BaseController
   end
 
   def update_channel_id
-    u = User.where(uuid: params[:uuid]).last
+    u = User.find_by(uuid: params[:uuid])
     # there shouldnt be rollbars about this - a user should exist at this point.
     if u.nil?
       u = User.create(uuid: params[:uuid], name: params[:name])
