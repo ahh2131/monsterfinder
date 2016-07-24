@@ -3,7 +3,7 @@ class V2::MonstersController < V2::BaseController
 
 
 
-  DISTANCE = 5
+  DISTANCE = 2
 
   skip_before_filter :verify_authenticity_token
 
