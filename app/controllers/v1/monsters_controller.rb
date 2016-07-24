@@ -14,7 +14,6 @@ class V1::MonstersController < V1::BaseController
     m = []
     if coordinates_exist?
       m = Monster
-          .near(coordinates, DISTANCE)
           .with_associations
           .recent(params[:recent] == 'true')
           .highly_rated(params[:rated] == 'true')
