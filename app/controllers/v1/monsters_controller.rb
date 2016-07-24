@@ -3,7 +3,7 @@ class V1::MonstersController < V1::BaseController
 
 
 
-  DISTANCE = 7
+  DISTANCE = 2
 
   skip_before_filter :verify_authenticity_token
 
@@ -14,11 +14,11 @@ class V1::MonstersController < V1::BaseController
     m = []
     if coordinates_exist?
       m = Monster
+          .near(coordinates, DISTANCE)
           .with_associations
           .recent(params[:recent] == 'true')
           .highly_rated(params[:rated] == 'true')
-          .near(coordinates, DISTANCE)
-          .all
+          .limit(50)
     end
     render json: MonsterBuilder.new(m).render.as_json
   end
