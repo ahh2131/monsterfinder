@@ -187,10 +187,6 @@ task :update_monsters_les_queens_bk => :environment do
     {
       lat: 40.674316,
       lng: -73.980617
-    },
-    {
-      lat: 40.675358,
-      lng: -73.917016
     }
   ].each do |c|
     Monster.request_monsters(c[:lat], c[:lng])
