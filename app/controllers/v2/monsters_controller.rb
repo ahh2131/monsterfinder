@@ -21,7 +21,7 @@ class V2::MonstersController < V2::BaseController
       .highly_rated(params[:rated] == 'true')
       .all
       if params[:uuid]
-        u = User.where(uuid: params[:uuid]).first
+        u = User.find_by(uuid: params[:uuid])
         if u
           u.lat = params[:lat]
           u.lng = params[:lng]
