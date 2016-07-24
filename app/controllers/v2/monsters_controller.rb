@@ -19,7 +19,7 @@ class V2::MonstersController < V2::BaseController
       .no_common
       .with_associations
       .highly_rated(params[:rated] == 'true')
-      .all
+      .limit(50)
       if params[:uuid]
         u = User.find_by(uuid: params[:uuid])
         if u
