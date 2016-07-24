@@ -3,6 +3,7 @@ ruby "2.3.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 gem 'geocoder'
+gem 'passenger'
 gem 'versionist'
 gem 'urbanairship'
 gem 'rack-attack'
